@@ -1,0 +1,296 @@
+Welcome To Address Book Table
+
+-------------------
+	UC1
+-------------------
+mysql> CREATE DATABASE address_book_table;
+Query OK, 1 row affected (0.39 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| payroll_service    |
+| address_book_table |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.08 sec)
+
+mysql> use address_book_table;
+Database changed
+
+mysql> select database();
++--------------------+
+| database()         |
++--------------------+
+| address_book_table |
++--------------------+
+1 row in set (0.00 sec)
+
+
+---------------------
+	UC2
+---------------------
+
+mysql> CREATE TABLE address_book_table
+    -> (
+    -> first_name       VARCHAR(150) NOT NULL,
+    -> last_name        VARCHAR(150) NOT NULL,
+    -> address          VARCHAR(150) NOT NULL,
+    -> city             VARCHAR(150) NOT NULL,
+    -> state            VARCHAR(150) NOT NULL,
+    -> zip              INT NOT NULL,
+    -> phone            VARCHAR(10) NOT NULL,
+    -> email            VARCHAR(320) NOT NULL
+    -> );
+Query OK, 0 rows affected (1.19 sec)
+
+
+
+---------------------
+	UC3
+---------------------
+
+
+mysql> INSERT INTO address_book_table(first_name,last_name,address,city,state,zip,phone,email) VALUES
+    -> ('Manish', 'Singh', 'Pune', 'Pimpdi', 'Maharashtra', 841222, 8249632998, 'manishsingh09943@gmail.com'),
+    -> ('Sayani', 'Koley', 'Kolkata', 'Hawda', 'West bengal', 760001, 9237582721, 'sayani.koley@gmail.com'),
+    -> ('Harsh', 'Agrwal', 'Mumbai', 'Bandra', 'Maharashtra', 800012, 7978342314, 'harsh.agarwal@gmail.com'),
+    -> ('Madhu', 'Singh', 'Pune', 'wakad', 'Maharsahtra', 570001, 9437034044, 'madhu881@gmail.com');
+Query OK, 4 rows affected (0.21 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM address_book_table;
++------------+-----------+---------+--------+-------------+--------+------------+----------------------------+
+| first_name | last_name | address | city   | state       | zip    | phone      | email                      |
++------------+-----------+---------+--------+-------------+--------+------------+----------------------------+
+| Manish     | Singh     | Pune    | Pimpdi | Maharashtra | 841222 | 8249632998 | manishsingh09943@gmail.com |
+| Sayani     | Koley     | Kolkata | Hawda  | West bengal | 760001 | 9237582721 | sayani.koley@gmail.com     |
+| Harsh      | Agrwal    | Mumbai  | Bandra | Maharashtra | 800012 | 7978342314 | harsh.agarwal@gmail.com    |
+| Madhu      | Singh     | Pune    | wakad  | Maharsahtra | 570001 | 9437034044 | madhu881@gmail.com         |
++------------+-----------+---------+--------+-------------+--------+------------+----------------------------+
+4 rows in set (0.07 sec)
+
+
+---------------------
+	UC4
+---------------------
+
+
+mysql> update address_book_table set address = 'Gandhinagar' where first_name = 'Manish';
+Query OK, 1 row affected (0.08 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM address_book_table;
++------------+-----------+-------------+--------+-------------+--------+------------+----------------------------+
+| first_name | last_name | address     | city   | state       | zip    | phone      | email                      |
++------------+-----------+-------------+--------+-------------+--------+------------+----------------------------+
+| Manish     | Singh     | Gandhinagar | Pimpdi | Maharashtra | 841222 | 8249632998 | manishsingh09943@gmail.com |
+| Sayani     | Koley     | Kolkata     | Hawda  | West bengal | 760001 | 9237582721 | sayani.koley@gmail.com     |
+| Harsh      | Agrwal    | Mumbai      | Bandra | Maharashtra | 800012 | 7978342314 | harsh.agarwal@gmail.com    |
+| Madhu      | Singh     | Pune        | wakad  | Maharsahtra | 570001 | 9437034044 | madhu881@gmail.com         |
++------------+-----------+-------------+--------+-------------+--------+------------+----------------------------+
+4 rows in set (0.00 sec)
+
+
+---------------------
+	UC5
+--------------------
+
+
+
+mysql> DELETE FROM address_book_table WHERE first_name = 'Madhu';
+Query OK, 1 row affected (0.07 sec)
+
+mysql> SELECT * FROM address_book_table;
++------------+-----------+-------------+--------+-------------+--------+------------+----------------------------+
+| first_name | last_name | address     | city   | state       | zip    | phone      | email                      |
++------------+-----------+-------------+--------+-------------+--------+------------+----------------------------+
+| Manish     | Singh     | Gandhinagar | Pimpdi | Maharashtra | 841222 | 8249632998 | manishsingh09943@gmail.com |
+| Sayani     | Koley     | Kolkata     | Hawda  | West bengal | 760001 | 9237582721 | sayani.koley@gmail.com     |
+| Harsh      | Agrwal    | Mumbai      | Bandra | Maharashtra | 800012 | 7978342314 | harsh.agarwal@gmail.com    |
++------------+-----------+-------------+--------+-------------+--------+------------+----------------------------+
+3 rows in set (0.07 sec)
+
+
+---------------------
+	UC6
+---------------------
+
+mysql> SELECT first_name FROM address_book_table WHERE city = 'Bandra';
++------------+
+| first_name |
++------------+
+| Harsh      |
++------------+
+1 row in set (0.00 sec)
+
+
+mysql> SELECT phone FROM address_book_table WHERE state = 'Maharashtra';
++------------+
+| phone      |
++------------+
+| 8249632998 |
+| 7978342314 |
++------------+
+2 rows in set (0.00 sec)
+
+
+---------------------
+	UC7
+---------------------
+
+mysql> SELECT phone FROM address_book_table WHERE state = 'Maharashtra';
++------------+
+| phone      |
++------------+
+| 8249632998 |
+| 7978342314 |
++------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT state, COUNT(first_name) FROM address_book_table WHERE state = 'Maharashtra';
++-------------+-------------------+
+| state       | COUNT(first_name) |
++-------------+-------------------+
+| Maharashtra |                 2 |
++-------------+-------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT address, COUNT(first_name) FROM address_book_table WHERE address = 'Pune';
++---------+-------------------+
+| address | COUNT(first_name) |
++---------+-------------------+
+| NULL    |                 0 |
++---------+-------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT address, COUNT(first_name) FROM address_book_table WHERE address = 'Kolkata';
++---------+-------------------+
+| address | COUNT(first_name) |
++---------+-------------------+
+| Kolkata |                 1 |
++---------+-------------------+
+1 row in set (0.00 sec)
+
+
+
+---------------------
+	UC8
+---------------------
+
+
+
+mysql> SELECT first_name, last_name, address, city, state, zip, phone, email FROM address_book_table ORDER BY first_name;
++------------+-----------+-------------+--------+-------------+--------+------------+----------------------------+
+| first_name | last_name | address     | city   | state       | zip    | phone      | email                      |
++------------+-----------+-------------+--------+-------------+--------+------------+----------------------------+
+| Harsh      | Agrwal    | Mumbai      | Bandra | Maharashtra | 800012 | 7978342314 | harsh.agarwal@gmail.com    |
+| Manish     | Singh     | Gandhinagar | Pimpdi | Maharashtra | 841222 | 8249632998 | manishsingh09943@gmail.com |
+| Sayani     | Koley     | Kolkata     | Hawda  | West bengal | 760001 | 9237582721 | sayani.koley@gmail.com     |
++------------+-----------+-------------+--------+-------------+--------+------------+----------------------------+
+3 rows in set (0.05 sec)
+
+
+
+---------------------
+	UC9
+---------------------
+
+
+mysql> ALTER TABLE address_book_table ADD type VARCHAR(150) AFTER email;
+Query OK, 0 rows affected (1.36 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESCRIBE address_book_table;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| first_name | varchar(150) | NO   |     | NULL    |       |
+| last_name  | varchar(150) | NO   |     | NULL    |       |
+| address    | varchar(150) | NO   |     | NULL    |       |
+| city       | varchar(150) | NO   |     | NULL    |       |
+| state      | varchar(150) | NO   |     | NULL    |       |
+| zip        | int          | NO   |     | NULL    |       |
+| phone      | varchar(10)  | NO   |     | NULL    |       |
+| email      | varchar(320) | NO   |     | NULL    |       |
+| type       | varchar(150) | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+9 rows in set (0.06 sec)
+
+
+mysql> UPDATE address_book_table SET type = 'Family' WHERE first_name = 'Manish';
+Query OK, 1 row affected (0.14 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM address_book_table;
++------------+-----------+-------------+--------+-------------+--------+------------+----------------------------+--------+
+| first_name | last_name | address     | city   | state       | zip    | phone      | email                      | type   |
++------------+-----------+-------------+--------+-------------+--------+------------+----------------------------+--------+
+| Manish     | Singh     | Gandhinagar | Pimpdi | Maharashtra | 841222 | 8249632998 | manishsingh09943@gmail.com | Family |
+| Sayani     | Koley     | Kolkata     | Hawda  | West bengal | 760001 | 9237582721 | sayani.koley@gmail.com     | NULL   |
+| Harsh      | Agrwal    | Mumbai      | Bandra | Maharashtra | 800012 | 7978342314 | harsh.agarwal@gmail.com    | NULL   |
++------------+-----------+-------------+--------+-------------+--------+------------+----------------------------+--------+
+3 rows in set (0.00 sec)
+
+
+mysql> UPDATE address_book_table SET type = 'Friend' WHERE first_name = 'Sayani';
+Query OK, 1 row affected (0.08 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE address_book_table SET type = 'Professional' WHERE first_name = 'Harsh';
+Query OK, 1 row affected (0.13 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM address_book_table;
++------------+-----------+-------------+--------+-------------+--------+------------+----------------------------+--------------+
+| first_name | last_name | address     | city   | state       | zip    | phone      | email                      | type         |
++------------+-----------+-------------+--------+-------------+--------+------------+----------------------------+--------------+
+| Manish     | Singh     | Gandhinagar | Pimpdi | Maharashtra | 841222 | 8249632998 | manishsingh09943@gmail.com | Family       |
+| Sayani     | Koley     | Kolkata     | Hawda  | West bengal | 760001 | 9237582721 | sayani.koley@gmail.com     | Friend       |
+| Harsh      | Agrwal    | Mumbai      | Bandra | Maharashtra | 800012 | 7978342314 | harsh.agarwal@gmail.com    | Professional |
++------------+-----------+-------------+--------+-------------+--------+------------+----------------------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT type, COUNT(first_name) FROM address_book_table WHERE type = 'Family';
++--------+-------------------+
+| type   | COUNT(first_name) |
++--------+-------------------+
+| Family |                 1 |
++--------+-------------------+
+1 row in set (0.00 sec)
+
+
+
+
+---------------------
+	UC10
+---------------------
+
+
+mysql> SELECT type, COUNT(first_name) FROM address_book_table WHERE type = 'Family';
++--------+-------------------+
+| type   | COUNT(first_name) |
++--------+-------------------+
+| Family |                 1 |
++--------+-------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT type, COUNT(first_name) FROM address_book_table WHERE type = 'Friend';
++--------+-------------------+
+| type   | COUNT(first_name) |
++--------+-------------------+
+| Friend |                 1 |
++--------+-------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT type, COUNT(first_name) FROM address_book_table WHERE type = 'Professional';
++--------------+-------------------+
+| type         | COUNT(first_name) |
++--------------+-------------------+
+| Professional |                 1 |
++--------------+-------------------+
+1 row in set (0.00 sec)
